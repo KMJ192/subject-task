@@ -37,12 +37,13 @@ type ComicRankItem = {
   previousRank: number; // 이전 랭킹
   updatedAt: number; // 업데이트 일자
   isPrint: boolean; // 단행본 여부
+  thumbnailSrc: string;
 };
 
 type ComicRankApiSuccessResModel = {
   count: number; // 아이템 전체 카운트
   hasNext: boolean; // 다음 page 존재 여부
-  data: Array<ComicRankItem>; // 아이템 리스트
+  data: ComicRankItem[]; // 아이템 리스트
 };
 
 // interface ComicRankApiFailResponseModel {
