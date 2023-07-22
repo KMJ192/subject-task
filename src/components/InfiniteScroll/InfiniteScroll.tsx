@@ -11,6 +11,7 @@ type BaseProps = {
   loadCnt?: number;
   loading?: boolean;
   loadingElement?: ReactNode;
+  hasNext?: boolean;
   onLoad?: () => void;
 };
 
@@ -25,6 +26,7 @@ function InfiniteScroll<T extends React.ElementType = typeof DEFAULT_ELEMENT>(
     loadCnt,
     loading,
     loadingElement,
+    hasNext,
     onLoad,
     className,
     ...props
@@ -34,6 +36,7 @@ function InfiniteScroll<T extends React.ElementType = typeof DEFAULT_ELEMENT>(
   const ELEMENT = as || DEFAULT_ELEMENT;
 
   const observingNodeRef = useRef<HTMLDivElement>(null);
+
   const observer = new IntersectionObserver((entries, observer) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
@@ -47,12 +50,16 @@ function InfiniteScroll<T extends React.ElementType = typeof DEFAULT_ELEMENT>(
     if (observingNodeRef.current) {
       observer.observe(observingNodeRef.current);
     }
+
+    return () => {
+      observer.disconnect();
+    };
   }, [loadCnt]);
 
   return (
     <ELEMENT {...props} ref={ref} className={cx('container', className)}>
       {children}
-      <div ref={observingNodeRef} className={cx('loader')}>
+      <div ref={observingNodeRef} className={cx('loader', { hasNext })}>
         {loading && loadingElement}
       </div>
     </ELEMENT>

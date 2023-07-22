@@ -4,9 +4,12 @@
   overflow: auto;
   .loader {
     width: 100%;
-    min-height: 48px;
     display: flex;
     align-items: center;
     justify-content: center;
+    min-height: 48px;
+    &.hasNext {
+      min-height: auto;
+    }
   }
 }
