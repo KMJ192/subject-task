@@ -1,0 +1,12 @@
+.arrow {
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  &.up {
+    border-bottom: 5px solid #00f;
+  }
+  &.down {
+    border-top: 5px solid #f00;
+  }
+}
