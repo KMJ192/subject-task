@@ -1,9 +1,7 @@
-// import RootRouter from './RootRouter/RootRouter';
+import RootRouter from './RootRouter/RootRouter';
 
 function App() {
-  // return <RootRouter />;
-
-  return <></>;
+  return <RootRouter />;
 }
 
 export default App;

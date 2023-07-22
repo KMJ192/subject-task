@@ -1,0 +1,58 @@
+.container {
+  display: flex;
+  column-gap: 16px;
+  padding: 24px;
+  .thumbnail {
+    width: 130px;
+    height: 174px;
+  }
+  .rank {
+    display: flex;
+    flex-direction: column;
+    row-gap: 4px;
+    align-items: center;
+    .currentRank {
+      font-style: italic;
+      font-size: 40px;
+      font-weight: 700;
+      padding-top: 8px;
+    }
+    .compareRank {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      column-gap: 2px;
+      padding: 0;
+      text-align: center;
+      & > span {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+      }
+    }
+  }
+  .info {
+    display: flex;
+    flex-direction: column;
+    row-gap: 8px;
+    padding-top: 8px;
+    .title {
+      font-size: 24px;
+      font-weight: 600;
+    }
+    .artist {
+      display: flex;
+      column-gap: 4px;
+      & > div {
+        &:not(:nth-last-child(1)) {
+          & > span {
+            &::before {
+              content: ',';
+            }
+          }
+        }
+      }
+    }
+  }
+}

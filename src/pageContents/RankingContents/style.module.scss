@@ -1,0 +1,37 @@
+.container {
+  height: calc(100% - 64px);
+  width: calc(100% - 112px);
+  display: flex;
+  flex-direction: column;
+  padding: 32px 56px;
+  .title {
+    font-size: 40px;
+    font-weight: 700;
+    width: 100%;
+  }
+  .sort {
+    display: flex;
+    column-gap: 16px;
+    & > button {
+      cursor: pointer;
+    }
+  }
+  .divideLine {
+    width: 100%;
+    border-bottom: 1px solid black;
+  }
+  .contents {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    .item {
+      padding: 8px;
+    }
+  }
+}
+
+.spacing {
+  height: 16px;
+}
