@@ -8,12 +8,19 @@ import useGetRanking from './hooks/useGetRanking';
 import useFilter from './hooks/useFilter';
 
 import { GENRE, URL } from '@src/RootRouter/url';
+import { useTimeout } from '@src/hooks/useTimeout';
 
 function Ranking() {
   const { queryParam } = useUrlSearchParams({ url: 'genre' });
   const nav = useNavigate();
   const { fetch, nextPage } = useGetRanking();
-  const { onFilter } = useFilter();
+  const { onFilter, initFilterFlag } = useFilter();
+
+  useTimeout(() => {
+    if (queryParam === '') {
+      nav(`${URL.ranking}?genre=${GENRE[0]}`);
+    }
+  }, 300);
 
   useEffect(() => {
     const isAnotherPage =
@@ -24,6 +31,7 @@ function Ranking() {
       return;
     }
     fetch(true);
+    initFilterFlag();
   }, [queryParam]);
 
   return <RankingContents nextPage={nextPage} onFilter={onFilter} />;
