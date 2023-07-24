@@ -2,10 +2,32 @@
 
 ### 개발 기술 스택
 
+- yarn
 - React
 - Typescript
 - sass
 - recoil
+
+### 프로젝트 실행
+
+- 종속성 설치
+
+```
+yarn install
+```
+
+- 프로젝트 실행
+
+```
+yarn start
+```
+
+- msw 설정
+  - public폴더 아래 mockServiceWorker.js 파일을 생성
+
+```
+npx msw init public/ --save
+```
 
 ### 요구 사항
 
@@ -39,27 +61,6 @@
 - Recoil
   - 전역 상태관리를 할 필요가 있었습니다. (hooks 간, 컴포넌트 간 상태 공유)
   - Context API를 이용하여 구현할 수 있겠지만, 보다 더 간단하게 구성할 수 있고 사용법이 간편한 Recoil을 사용하였습니다.
-
-### 실행
-
-- 종속성 설치
-
-```
-yarn install
-```
-
-- 프로젝트 실행
-
-```
-yarn start
-```
-
-- msw 설정
-  - public폴더 아래 mockServiceWorker.js 파일을 생성
-
-```
-npx msw init public/ --save
-```
 
 ### 폴더 구조
 
