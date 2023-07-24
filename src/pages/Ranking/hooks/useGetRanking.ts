@@ -50,7 +50,7 @@ type ComicRankApiSuccessResModel = {
 
 function useGetRanking() {
   const { queryParam } = useUrlSearchParams({ url: 'genre' });
-  const pageCnt = useRef(1);
+  const pageCnt = useRef(0);
   const [rankingListInfo, setRankingListInfo] =
     useRecoilState<RankingListInfoAtom>(rankingListInfoAtom);
 
@@ -59,8 +59,9 @@ function useGetRanking() {
     isInit: boolean,
   ): Promise<RankingListInfoAtom> => {
     if (isInit) {
-      pageCnt.current = 1;
+      pageCnt.current = 0;
     }
+    pageCnt.current += 1;
     const response = await fetcher<ComicRankApiSuccessResModel>({
       url: `/api/comics/${queryParam}`,
       method: 'GET',
@@ -81,7 +82,7 @@ function useGetRanking() {
 
     newState.loading = false;
     newState.currentGenre = queryParam;
-    pageCnt.current += 1;
+
     if (status === 200 && isSuccess) {
       if (!data || !Array.isArray(data.data)) {
         return {
