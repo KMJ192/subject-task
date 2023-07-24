@@ -4,7 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "start": "vite --port 3000",
+    "start": "vite --port 3000 --mode develop",
+    "start:api-set": "vite --port 3000 --mode apiset",
     "build": "tsc && vite build",
     "preview": "vite preview"
   },
