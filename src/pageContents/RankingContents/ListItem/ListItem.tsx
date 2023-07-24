@@ -64,7 +64,9 @@ function ListItem({ index, comicRankItem }: Props) {
             return null;
           })}
         </div>
-        <div>{comicRankItem.freedEpisodeSize}화 무료</div>
+        {comicRankItem.freedEpisodeSize > 0 && (
+          <div>{comicRankItem.freedEpisodeSize}화 무료</div>
+        )}
         {isCompleted && <div>완결</div>}
         {isValidPeriod && (
           <div>매주 {PERIOD[comicRankItem.schedule.periods[0]]} 연재</div>
