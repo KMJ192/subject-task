@@ -23,6 +23,7 @@ const handlers = [
     const { searchParams } = req.url;
     const page = searchParams.get('page');
 
+    // virtual latency
     await sleep(1000);
 
     return res(
@@ -47,9 +48,11 @@ const handlers = [
       })(),
     );
   }),
-  rest.get('/api/comics/drama', (req, res, ctx) => {
+  rest.get('/api/comics/drama', async (req, res, ctx) => {
     const { searchParams } = req.url;
     const page = searchParams.get('page');
+
+    await sleep(1000);
 
     return res(
       ctx.status(200),
