@@ -7,6 +7,13 @@
 - sass
 - recoil
 
+### 요구 사항
+
+[X] URL Query Parameter로 구성
+[X] 무한 스크롤 기능 추가
+[X] 작품 정보(썸네일, 타이틀, 작가이름, 랭킹, 무료회차, 완결/연재여부) 출력
+[X] 필터링 (연재중, 완결, 무료회차 3개 이상, 단행본 작품)
+
 ### mocking api 구성
 
 - MSW를 이용한 모의 서버 구성
@@ -43,23 +50,20 @@ yarn install
 
 - 프로젝트 실행
 
-````
+```
 yarn start
 ```
 
 - msw 설정
   - public폴더 아래 mockServiceWorker.js 파일을 생성
 
-````
-
+```
 npx msw init public/ --save
-
 ```
 
 ### 폴더 구조
 
 ```
-
 root /
 ├ configs/vite-env
 | ├ .env.apiset
@@ -137,7 +141,6 @@ root /
 ├ tsconfig.node.json
 ├ vite.config.ts
 ⎿ yarn.lock
-
 ```
 
 ### git commit message
@@ -147,7 +150,6 @@ root /
 - 액션
 
 ```
-
 feat: 기능 추가, 삭제, 변경 (코드 수정)
 fix: 버그 수정
 type: 코드 형식 변경
@@ -156,7 +158,4 @@ docs: 코드 외 문서의 추가, 삭제, 변경
 test: 테스트 코드 추가, 삭제, 변경
 build: 빌드 옵션 변경
 etc: 위 해당 사항이 없는 모든 변경 사항
-
-```
-
 ```
