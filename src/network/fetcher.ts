@@ -8,6 +8,9 @@ type ResModel<T> = {
 };
 
 const instance = axios.create({
+  baseURL:
+    import.meta.env.VITE_REACT_APP_API !== 'develop' &&
+    import.meta.env.VITE_REACT_APP_API,
   timeout: 15000,
 });
 

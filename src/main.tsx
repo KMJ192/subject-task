@@ -5,7 +5,9 @@ import './index.css';
 
 import { server } from './response_mock/browser.ts';
 
-server.start({ onUnhandledRequest: 'bypass' });
+if (import.meta.env.VITE_REACT_APP_API === 'develop') {
+  server.start({ onUnhandledRequest: 'bypass' });
+}
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
