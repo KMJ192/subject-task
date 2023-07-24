@@ -46,7 +46,18 @@ function useFilter() {
     });
   };
 
+  const initFilterFlag = () => {
+    setFilterFlag({
+      all: true,
+      completion: false,
+      scheduled: false,
+      freedEpisode3: false,
+      print: false,
+    });
+  };
+
   return {
+    initFilterFlag,
     onFilter,
   };
 }
