@@ -43,7 +43,7 @@ function ListItem({ index, comicRankItem }: Props) {
             ) : (
               <Arrow direction='down' />
             )}
-            <span>{Math.abs(changedRank)}</span>
+            <div>{Math.abs(changedRank)}</div>
           </div>
         )}
       </div>
