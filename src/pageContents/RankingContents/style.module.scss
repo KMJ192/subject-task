@@ -15,13 +15,18 @@
     & > button {
       cursor: pointer;
       &.isSelect {
-        background-color: #7ee6fd;
+        background-color: #cdedf4;
       }
     }
   }
   .divideLine {
     width: 100%;
     border-bottom: 1px solid black;
+  }
+  .error {
+    height: 24px;
+    color: #f00;
+    padding: 0 16px;
   }
   .contents {
     display: flex;

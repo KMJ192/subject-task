@@ -25,7 +25,7 @@ type Props = {
 
 function RankingContents({ nextPage, onFilter }: Props) {
   const infiniteScrollRef = useRef(null);
-  const { rankingList, hasNext, loading, currentGenre } =
+  const { rankingList, hasNext, loading, currentGenre, errorMsg } =
     useRecoilValue(rankingListInfoAtom);
   const filterFlag = useRecoilValue(rankingFilterFlagAtom);
   const { queryParam } = useUrlSearchParams({ url: 'genre' });
@@ -81,6 +81,7 @@ function RankingContents({ nextPage, onFilter }: Props) {
       <div className={style.spacing}></div>
       <div className={style.divideLine}></div>
       <div className={style.spacing}></div>
+      <div className={style.error}>{errorMsg}</div>
       <InfiniteScroll
         as='ul'
         ref={infiniteScrollRef}
