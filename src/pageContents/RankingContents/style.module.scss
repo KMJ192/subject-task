@@ -1,9 +1,9 @@
 .container {
-  height: calc(100% - 64px);
+  height: calc(100% - 112px);
   width: calc(100% - 112px);
   display: flex;
   flex-direction: column;
-  padding: 32px 56px;
+  padding: 16px 56px;
   .title {
     font-size: 40px;
     font-weight: 700;
@@ -14,6 +14,9 @@
     column-gap: 16px;
     & > button {
       cursor: pointer;
+      &.isSelect {
+        background-color: #7ee6fd;
+      }
     }
   }
   .divideLine {

@@ -69,6 +69,7 @@ function ListItem({ index, comicRankItem }: Props) {
         {isValidPeriod && (
           <div>매주 {PERIOD[comicRankItem.schedule.periods[0]]} 연재</div>
         )}
+        {comicRankItem.isPrint && <div>단행본</div>}
       </div>
     </div>
   );
