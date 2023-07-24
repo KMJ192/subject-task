@@ -10,6 +10,12 @@
 
 ### 프로젝트 실행
 
+- 프로젝트 복사
+
+```
+git clone https://github.com/KMJ192/subject-task
+```
+
 - 종속성 설치
 
 ```
@@ -24,6 +30,7 @@ yarn start
 
 - msw 설정
   - public폴더 아래 mockServiceWorker.js 파일을 생성
+  - mockServiceWorker.js는 기본적으로 생성되어 있으며 아래의 스크립트는 실행하지 않아도 무방합니다.
 
 ```
 npx msw init public/ --save
