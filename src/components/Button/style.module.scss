@@ -1,4 +1,8 @@
 .button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: fit-content;
   padding: 8px 16px;
   font-size: 16px;
   border-radius: 4px;
