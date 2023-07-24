@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import { useRecoilValue } from 'recoil';
 import useUrlSearchParams from '@src/hooks/useUrlSearchParams';
 
@@ -23,11 +24,23 @@ type Props = {
 };
 
 function RankingContents({ nextPage, onFilter }: Props) {
+  const infiniteScrollRef = useRef(null);
   const { rankingList, hasNext, loading, currentGenre } =
     useRecoilValue(rankingListInfoAtom);
   const filterFlag = useRecoilValue(rankingFilterFlagAtom);
   const { queryParam } = useUrlSearchParams({ url: 'genre' });
+
   const isGenre = currentGenre === queryParam;
+
+  const filter = (filterType: FilterType) => {
+    if (infiniteScrollRef.current) {
+      const infiniteScroll = infiniteScrollRef.current as HTMLUListElement;
+      infiniteScroll.scrollTo({
+        top: 0,
+      });
+    }
+    onFilter(filterType);
+  };
 
   return (
     <div className={style.container}>
@@ -39,28 +52,28 @@ function RankingContents({ nextPage, onFilter }: Props) {
       </div>
       <div className={style.spacing}></div>
       <div className={style.sort}>
-        <Button onClick={() => onFilter('all')}>전체 보기</Button>
+        <Button onClick={() => filter('all')}>전체 보기</Button>
         <Button
           className={filterFlag.scheduled ? style.isSelect : ''}
-          onClick={() => onFilter('scheduled')}
+          onClick={() => filter('scheduled')}
         >
           연재 중
         </Button>
         <Button
           className={filterFlag.completion ? style.isSelect : ''}
-          onClick={() => onFilter('completion')}
+          onClick={() => filter('completion')}
         >
           완결
         </Button>
         <Button
           className={filterFlag.freedEpisode3 ? style.isSelect : ''}
-          onClick={() => onFilter('freedEpisode3')}
+          onClick={() => filter('freedEpisode3')}
         >
           무료회차 3개 이상
         </Button>
         <Button
           className={filterFlag.print ? style.isSelect : ''}
-          onClick={() => onFilter('print')}
+          onClick={() => filter('print')}
         >
           단행본 작품
         </Button>
@@ -70,6 +83,7 @@ function RankingContents({ nextPage, onFilter }: Props) {
       <div className={style.spacing}></div>
       <InfiniteScroll
         as='ul'
+        ref={infiniteScrollRef}
         className={style.contents}
         loadCnt={rankingList.length}
         loading={loading}
@@ -82,15 +96,19 @@ function RankingContents({ nextPage, onFilter }: Props) {
           rankingList
             .filter(({ contentsState, freedEpisodeSize, isPrint }) => {
               if (filterFlag.all) return true;
-              if (
-                (filterFlag.scheduled && contentsState === 'scheduled') ||
-                (filterFlag.completion && contentsState === 'completed') ||
-                (filterFlag.freedEpisode3 && freedEpisodeSize > 3) ||
-                (filterFlag.print && isPrint)
-              ) {
-                return true;
-              }
-              return false;
+
+              if (filterFlag.completion && contentsState !== 'completed')
+                return false;
+
+              if (filterFlag.scheduled && contentsState !== 'scheduled')
+                return false;
+
+              if (filterFlag.freedEpisode3 && freedEpisodeSize < 3)
+                return false;
+
+              if (filterFlag.print && !isPrint) return false;
+
+              return true;
             })
             .map((d, index) => {
               return (
