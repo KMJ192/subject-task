@@ -128,12 +128,12 @@ function useGetRanking() {
     setRankingListInfo(newState);
   };
 
-  const nextPage = () => {
+  const onLoadNextPage = () => {
     fetch(false);
   };
 
   return {
-    nextPage,
+    onLoadNextPage,
     fetch,
   };
 }

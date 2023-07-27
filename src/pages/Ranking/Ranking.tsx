@@ -13,7 +13,7 @@ import { useTimeout } from '@src/hooks/useTimeout';
 function Ranking() {
   const { queryParam } = useUrlSearchParams({ url: 'genre' });
   const nav = useNavigate();
-  const { fetch, nextPage } = useGetRanking();
+  const { fetch, onLoadNextPage } = useGetRanking();
   const { onFilter, initFilterFlag } = useFilter();
 
   useTimeout(() => {
@@ -34,7 +34,9 @@ function Ranking() {
     initFilterFlag();
   }, [queryParam]);
 
-  return <RankingContents nextPage={nextPage} onFilter={onFilter} />;
+  return (
+    <RankingContents onLoadNextPage={onLoadNextPage} onFilter={onFilter} />
+  );
 }
 
 export default Ranking;
