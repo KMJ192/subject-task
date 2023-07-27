@@ -10,7 +10,7 @@ import {
 import InfiniteScroll from '@src/components/InfiniteScroll/InfiniteScroll';
 import Spinner from '@src/components/Spinner/Spinner';
 import Button from '@src/components/Button/Button';
-import ListItem from './ListItem/ListItem';
+import RankingList from './RankingList/RankingList';
 
 import { GENRE } from '@src/RootRouter/url';
 
@@ -19,11 +19,11 @@ import type { FilterType } from '@src/pages/Ranking/hooks/useFilter';
 import style from './style.module.scss';
 
 type Props = {
-  nextPage: () => void;
+  onLoadNextPage: () => void;
   onFilter: (filterType: FilterType) => void;
 };
 
-function RankingContents({ nextPage, onFilter }: Props) {
+function RankingContents({ onLoadNextPage, onFilter }: Props) {
   const infiniteScrollRef = useRef(null);
   const { rankingList, hasNext, loading, currentGenre, errorMsg } =
     useRecoilValue(rankingListInfoAtom);
@@ -87,37 +87,13 @@ function RankingContents({ nextPage, onFilter }: Props) {
         ref={infiniteScrollRef}
         className={style.contents}
         loadCnt={rankingList.length}
-        loading={loading}
+        isLoading={loading}
         hasNext={!hasNext}
         isObserve={isGenre}
         loadingElement={<Spinner />}
-        onLoad={nextPage}
+        onLoad={onLoadNextPage}
       >
-        {isGenre &&
-          rankingList
-            .filter(({ contentsState, freedEpisodeSize, isPrint }) => {
-              if (filterFlag.all) return true;
-
-              if (filterFlag.completion && contentsState !== 'completed')
-                return false;
-
-              if (filterFlag.scheduled && contentsState !== 'scheduled')
-                return false;
-
-              if (filterFlag.freedEpisode3 && freedEpisodeSize < 3)
-                return false;
-
-              if (filterFlag.print && !isPrint) return false;
-
-              return true;
-            })
-            .map((d, index) => {
-              return (
-                <li key={`${d.id}-${index}`} className={style.item}>
-                  <ListItem index={index} comicRankItem={d} />
-                </li>
-              );
-            })}
+        {isGenre && <RankingList />}
       </InfiniteScroll>
     </div>
   );
