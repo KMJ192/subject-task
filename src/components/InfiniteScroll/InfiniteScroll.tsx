@@ -9,7 +9,7 @@ const cx = classNames.bind(style);
 type BaseProps = {
   children?: ReactNode;
   loadCnt?: number;
-  loading?: boolean;
+  isLoading?: boolean;
   loadingElement?: ReactNode;
   hasNext?: boolean;
   isObserve?: boolean;
@@ -25,7 +25,7 @@ function InfiniteScroll<T extends React.ElementType = typeof DEFAULT_ELEMENT>(
     as,
     children,
     loadCnt,
-    loading,
+    isLoading,
     loadingElement,
     hasNext,
     isObserve = true,
@@ -65,7 +65,7 @@ function InfiniteScroll<T extends React.ElementType = typeof DEFAULT_ELEMENT>(
     <ELEMENT {...props} ref={ref} className={cx('container', className)}>
       {children}
       <div ref={observingNodeRef} className={cx('loader', { hasNext })}>
-        {loading && loadingElement}
+        {isLoading && loadingElement}
       </div>
     </ELEMENT>
   );
