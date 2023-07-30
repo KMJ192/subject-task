@@ -1,6 +1,5 @@
 import { useRef } from 'react';
 import { useRecoilValue } from 'recoil';
-import useUrlSearchParams from '@src/hooks/useUrlSearchParams';
 
 import {
   rankingFilterFlagAtom,
@@ -19,16 +18,16 @@ import type { FilterType } from '@src/pages/Ranking/hooks/useFilter';
 import style from './style.module.scss';
 
 type Props = {
+  queryParam: string;
   onLoadNextPage: () => void;
   onFilter: (filterType: FilterType) => void;
 };
 
-function RankingContents({ onLoadNextPage, onFilter }: Props) {
+function RankingContents({ queryParam, onLoadNextPage, onFilter }: Props) {
   const infiniteScrollRef = useRef(null);
   const { rankingList, hasNext, loading, currentGenre, errorMsg } =
     useRecoilValue(rankingListInfoAtom);
   const filterFlag = useRecoilValue(rankingFilterFlagAtom);
-  const { queryParam } = useUrlSearchParams({ url: 'genre' });
 
   const isGenre = currentGenre === queryParam;
 

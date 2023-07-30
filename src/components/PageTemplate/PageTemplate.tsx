@@ -1,10 +1,10 @@
 import type { ReactNode } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Button from '../Button/Button';
 import { GENRE, URL } from '@src/RootRouter/url';
 
 import style from './style.module.scss';
-import useUrlSearchParams from '@src/hooks/useUrlSearchParams';
+import { getQueryParam } from '@src/utils';
 
 type Props = {
   children: ReactNode;
@@ -12,9 +12,11 @@ type Props = {
 
 function PageTemplate({ children }: Props) {
   const nav = useNavigate();
-  const { queryParam } = useUrlSearchParams({ url: 'genre' });
+
+  const { search } = useLocation();
 
   const onNav = (type: 'romance' | 'drama') => {
+    const queryParam = getQueryParam(search);
     if (type === 'romance' && queryParam !== type) {
       nav(`${URL.ranking}?genre=${GENRE[0]}`);
       return;

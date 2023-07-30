@@ -7,6 +7,7 @@ import useGetRanking from './hooks/useGetRanking';
 import useFilter from './hooks/useFilter';
 
 import { GENRE, URL } from '@src/RootRouter/url';
+import { getQueryParam } from '@src/utils';
 
 function Ranking() {
   const { search } = useLocation();
@@ -14,20 +15,15 @@ function Ranking() {
   const { fetch } = useGetRanking();
   const { onFilter, initFilterFlag } = useFilter();
 
-  const getQueryParam = () => {
-    const urlSearchParams = new URLSearchParams(search);
-    return urlSearchParams.get('genre') || '';
-  };
-
   const onLoadNextPage = () => {
     fetch({
       isInit: false,
-      queryParam: getQueryParam(),
+      queryParam: getQueryParam(search),
     });
   };
 
   useEffect(() => {
-    const queryParam = getQueryParam();
+    const queryParam = getQueryParam(search);
 
     const isAnotherPage = queryParam !== GENRE[0] && queryParam !== GENRE[1];
 
@@ -43,7 +39,11 @@ function Ranking() {
   }, [search]);
 
   return (
-    <RankingContents onLoadNextPage={onLoadNextPage} onFilter={onFilter} />
+    <RankingContents
+      queryParam={getQueryParam(search)}
+      onLoadNextPage={onLoadNextPage}
+      onFilter={onFilter}
+    />
   );
 }
 
