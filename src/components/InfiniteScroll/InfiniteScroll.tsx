@@ -42,13 +42,10 @@ function InfiniteScroll<T extends React.ElementType = typeof DEFAULT_ELEMENT>(
 
   useEffect(() => {
     if (isObserve) {
-      const observer = new IntersectionObserver((entries, observer) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            if (onLoad) onLoad();
-            observer.disconnect();
-          }
-        });
+      const observer = new IntersectionObserver((entries) => {
+        if (Array.isArray(entries) && entries[0].isIntersecting) {
+          if (onLoad) onLoad();
+        }
       });
 
       if (observingNodeRef.current) {
