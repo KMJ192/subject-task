@@ -1,4 +1,5 @@
-import { useEffect, type ReactNode, useRef, Ref, forwardRef } from 'react';
+import { useEffect, useRef, forwardRef } from 'react';
+import type { ReactNode, Ref, ElementRef } from 'react';
 
 import type { OVER_RIDABLE_PROPS } from '@src/types/types';
 
@@ -33,7 +34,7 @@ function InfiniteScroll<T extends React.ElementType = typeof DEFAULT_ELEMENT>(
     className,
     ...props
   }: Props<T>,
-  ref: Ref<any>,
+  ref: Ref<ElementRef<typeof DEFAULT_ELEMENT>>,
 ) {
   const ELEMENT = as || DEFAULT_ELEMENT;
 
