@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import RankingContents from '@src/pageContents/RankingContents/RankingContents';
 
@@ -8,9 +8,9 @@ import useGetRanking from './hooks/useGetRanking';
 import useFilter from './hooks/useFilter';
 
 import { GENRE, URL } from '@src/RootRouter/url';
-import { useTimeout } from '@src/hooks/useTimeout';
 
 function Ranking() {
+  const { search } = useLocation();
   const { queryParam } = useUrlSearchParams({ url: 'genre' });
   const nav = useNavigate();
   const { fetch } = useGetRanking();
@@ -20,15 +20,14 @@ function Ranking() {
     fetch(false);
   };
 
-  useTimeout(() => {
-    if (queryParam === '') {
-      nav(`${URL.ranking}?genre=${GENRE[0]}`);
-    }
-  }, 300);
-
   useEffect(() => {
     const isAnotherPage =
-      queryParam !== '' && queryParam !== GENRE[0] && queryParam !== GENRE[1];
+      (queryParam !== '' &&
+        queryParam !== GENRE[0] &&
+        queryParam !== GENRE[1]) ||
+      search === '' ||
+      search === '?genre=' ||
+      !search.includes('?genre=');
 
     if (isAnotherPage) {
       nav(`${URL.ranking}?genre=${GENRE[0]}`);
