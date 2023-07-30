@@ -3,7 +3,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 import RankingContents from '@src/pageContents/RankingContents/RankingContents';
 
-import useUrlSearchParams from '@src/hooks/useUrlSearchParams';
 import useGetRanking from './hooks/useGetRanking';
 import useFilter from './hooks/useFilter';
 
@@ -11,31 +10,37 @@ import { GENRE, URL } from '@src/RootRouter/url';
 
 function Ranking() {
   const { search } = useLocation();
-  const { queryParam } = useUrlSearchParams({ url: 'genre' });
   const nav = useNavigate();
   const { fetch } = useGetRanking();
   const { onFilter, initFilterFlag } = useFilter();
 
+  const getQueryParam = () => {
+    const urlSearchParams = new URLSearchParams(search);
+    return urlSearchParams.get('genre') || '';
+  };
+
   const onLoadNextPage = () => {
-    fetch(false);
+    fetch({
+      isInit: false,
+      queryParam: getQueryParam(),
+    });
   };
 
   useEffect(() => {
-    const isAnotherPage =
-      (queryParam !== '' &&
-        queryParam !== GENRE[0] &&
-        queryParam !== GENRE[1]) ||
-      search === '' ||
-      search === '?genre=' ||
-      !search.includes('?genre=');
+    const queryParam = getQueryParam();
+
+    const isAnotherPage = queryParam !== GENRE[0] && queryParam !== GENRE[1];
 
     if (isAnotherPage) {
       nav(`${URL.ranking}?genre=${GENRE[0]}`);
       return;
     }
-    fetch(true);
+    fetch({
+      isInit: true,
+      queryParam,
+    });
     initFilterFlag();
-  }, [queryParam]);
+  }, [search]);
 
   return (
     <RankingContents onLoadNextPage={onLoadNextPage} onFilter={onFilter} />

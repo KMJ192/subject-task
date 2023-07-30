@@ -1,10 +1,8 @@
 import { useRef } from 'react';
 import { useRecoilState } from 'recoil';
 import { fetcher } from '@src/network/fetcher';
-import useUrlSearchParams from '@src/hooks/useUrlSearchParams';
-import { GENRE } from '@src/RootRouter/url';
 import {
-  RankingListInfoAtom,
+  type RankingListInfoAtom,
   rankingListInfoAtom,
 } from '@src/store/pages/Ranking/atom';
 
@@ -49,7 +47,6 @@ type ComicRankApiSuccessResModel = {
 };
 
 function useGetRanking() {
-  const { queryParam } = useUrlSearchParams({ url: 'genre' });
   const pageCnt = useRef(0);
   const [rankingListInfo, setRankingListInfo] =
     useRecoilState<RankingListInfoAtom>(rankingListInfoAtom);
@@ -112,9 +109,14 @@ function useGetRanking() {
     };
   };
 
-  const fetch = async (isInit: boolean) => {
+  const fetch = async ({
+    isInit,
+    queryParam,
+  }: {
+    isInit: boolean;
+    queryParam: string;
+  }) => {
     if (
-      (queryParam !== GENRE[0] && queryParam !== GENRE[1]) ||
       (!isInit && !rankingListInfo.hasNext) ||
       (!isInit && rankingListInfo.loading)
     ) {
